@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.EditorSingerPageController">
+    <children>
+        <TableView fx:id="tableView" layoutX="14.0" layoutY="173.0" prefHeight="201.0" prefWidth="566.0">
+            <columns>
+                <TableColumn fx:id="photoColoumn" maxWidth="100.0" minWidth="100.0" prefWidth="217.33330821990967" />
+                <TableColumn fx:id="nameColoumn" prefWidth="347.3333435058594" text="Album Title" />
+                <TableColumn fx:id="releaseDate" prefWidth="115.33328247070312" text="Release Date" />
+            </columns>
+        </TableView>
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f6fff00" height="100.0" layoutX="250.0" layoutY="23.0" stroke="WHITE" strokeType="INSIDE" width="100.0" />
+        <ImageView fx:id="singerImageView" fitHeight="100.0" fitWidth="100.0" layoutX="250.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+        <Label fx:id="singerNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="135.0" prefHeight="18.0" prefWidth="117.0" text="Artis Name" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Consolas" size="12.0" />
+            </font>
+        </Label>
+        <Button layoutX="32.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button layoutX="504.0" layoutY="140.0" mnemonicParsing="false" onAction="#addAlbum" text="Add Album" />
+      <ComboBox fx:id="modeDropDown" layoutX="429.0" layoutY="36.0" prefWidth="150.0" />
+      <Label layoutX="429.0" layoutY="14.0" text="Mode :" textFill="WHITE" />
+        <Label fx:id="warnLabel" layoutX="432.0" layoutY="56.0" prefHeight="25.0" prefWidth="100.0" textFill="#e30101" />
+      <Label fx:id="progressLabel" alignment="CENTER" layoutX="208.0" layoutY="157.0" prefHeight="17.0" prefWidth="187.0" text="Label" />
+      <Button fx:id="mRefreshBtn" onAction="#refreshList" layoutX="27.0" layoutY="140.0" mnemonicParsing="false" text="Refresh" />
+    </children>
+</AnchorPane>

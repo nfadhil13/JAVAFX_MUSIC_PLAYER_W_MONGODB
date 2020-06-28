@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#32175B, #B8ABBA);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.AddAlbumController">
+    <children>
+        <Pane prefHeight="66.0" prefWidth="600.0" style="-fx-background-color: #212121; -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.6) , 5, 0.0 , 0 , 3 );">
+            <children>
+                <Label layoutX="235.0" layoutY="6.0" prefHeight="53.0" prefWidth="131.0" text="Sign Up" textFill="#d0f0ff">
+                    <font>
+                        <Font name="Algerian" size="36.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane layoutY="66.0" prefHeight="333.0" prefWidth="600.0">
+            <children>
+                <Label layoutX="57.0" layoutY="250.0" prefHeight="27.0" prefWidth="103.0" text="Password :" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label layoutX="57.0" layoutY="282.0" prefHeight="27.0" prefWidth="141.0" text="Re-entry Password :" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="enterPasswordShow" layoutX="241.0" layoutY="251.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your password" />
+                <PasswordField fx:id="passwordTextField" layoutX="241.0" layoutY="251.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your password" />
+                <PasswordField fx:id="rePasswordTextField" layoutX="241.0" layoutY="283.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your password" />
+                <Button layoutX="474.0" layoutY="273.0" mnemonicParsing="false" onAction="#addAlbum" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Add Album" textFill="WHITE" />
+                <Button fx:id="clear" layoutX="535.0" layoutY="238.0" mnemonicParsing="false" onAction="#clear" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Clear" />
+                <Label layoutX="57.0" layoutY="211.0" prefHeight="27.0" prefWidth="103.0" text="Album Title" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" layoutX="240.0" layoutY="84.0" stroke="WHITE" strokeType="INSIDE" width="100.0" />
+                <ImageView fx:id="imageUser" fitHeight="100.0" fitWidth="100.0" layoutX="240.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true" />
+                <Button layoutX="25.0" layoutY="21.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Back" />
+                <Button layoutX="353.0" layoutY="154.0" mnemonicParsing="false" onAction="#importPhoto" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Import Photo" />
+                <Label fx:id="warnLabel" layoutX="75.0" layoutY="311.0" prefHeight="17.0" prefWidth="355.0" textFill="RED" />
+                <Button fx:id="showPasswordButton" layoutX="444.0" layoutY="251.0" mnemonicParsing="false" onAction="#showPassword" prefHeight="25.0" prefWidth="25.0" />
+                <TextField fx:id="titleTextField" layoutX="243.0" layoutY="212.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your artist name" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="17.0" layoutX="160.0" layoutY="63.0" stroke="BLACK" strokeType="INSIDE" width="261.0" />
+            <Label fx:id="progressLabel" alignment="CENTER" layoutX="176.0" layoutY="63.0" prefHeight="17.0" prefWidth="220.0" text="Label" textFill="WHITE" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

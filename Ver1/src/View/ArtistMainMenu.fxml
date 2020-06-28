@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#32175B, #B8ABBA);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.ArtistMainMenu">
+    <children>
+        <Pane prefHeight="66.0" prefWidth="600.0" style="-fx-background-color: #212121; -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.6) , 5, 0.0 , 0 , 3 );">
+            <children>
+                <Label layoutX="177.0" layoutY="7.0" prefHeight="53.0" prefWidth="300.0" text="Musician Menu" textFill="#d0f0ff">
+                    <font>
+                        <Font name="Algerian" size="36.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane layoutY="66.0" prefHeight="333.0" prefWidth="600.0">
+            <children>
+                <Button layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Back" />
+                <Button layoutX="327.0" layoutY="131.0" mnemonicParsing="false" onAction="#EditProfile" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Edit Profile" textFill="WHITE" />
+                <Button layoutX="169.0" layoutY="131.0" mnemonicParsing="false" onAction="#insertMusic" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Insert Music" textFill="WHITE" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#32175B, #B8ABBA);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.MainMenuController">
+   <children>
+      <Pane prefHeight="66.0" prefWidth="600.0" style="-fx-background-color: #212121; -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.6) , 5, 0.0 , 0 , 3 );">
+         <children>
+            <Label layoutX="252.0" layoutY="7.0" prefHeight="53.0" prefWidth="131.0" text="Home" textFill="#d0f0ff">
+               <font>
+                  <Font name="Algerian" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutY="66.0" prefHeight="333.0" prefWidth="600.0">
+         <children>
+            <Pane layoutY="233.0" prefHeight="101.0" prefWidth="600.0" style="-fx-background-color: black;">
+               <children>
+                  <Button fx:id="playbutton" layoutX="275.0" layoutY="37.0" mnemonicParsing="false" onAction="#play" style="-fx-background-color: linear-gradient(#000000, #5A5A5A); -fx-border-color: white;" text="&gt;" textFill="WHITE" />
+                  <Button layoutX="319.0" layoutY="37.0" mnemonicParsing="false" onAction="#nextSong" style="-fx-background-color: linear-gradient(#000000, #5A5A5A); -fx-border-color: white;" text="Next" textFill="WHITE" />
+                  <Button layoutX="221.0" layoutY="37.0" mnemonicParsing="false" onAction="#prevSong" style="-fx-background-color: linear-gradient(#000000, #5A5A5A); -fx-border-color: white;" text="Prev" textFill="WHITE" />
+                  <Button layoutX="468.0" layoutY="36.0" mnemonicParsing="false" onAction="#goToQueue" style="-fx-background-color: linear-gradient(#000000, #5A5A5A); -fx-border-color: white;" text="See Queue" textFill="WHITE" />
+                  <Label fx:id="currentMusicLabel" layoutX="92.0" layoutY="17.0" text="Now Playing :" textFill="WHITE" />
+                  <Label fx:id="cuurentTimeLabel" layoutX="106.0" layoutY="73.0" text="00:00:00" textFill="WHITE" />
+                  <Slider fx:id="timeSlider" layoutX="157.0" layoutY="74.0" prefHeight="14.0" prefWidth="264.0" />
+                  <Label fx:id="maxTimeLabel" layoutX="421.0" layoutY="73.0" text="00:00:00" textFill="WHITE" />
+               </children>
+            </Pane>
+            <Button layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Log Out" />
+            <Button layoutX="155.0" layoutY="131.0" mnemonicParsing="false" onAction="#searchMusic" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Search Music" textFill="WHITE" />
+            <Button layoutX="360.0" layoutY="131.0" mnemonicParsing="false" onAction="#EditProfile" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Edit Profile" textFill="WHITE" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

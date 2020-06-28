@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="Images"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JavaFX11"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/bson-3.12.2"/>
+	<classpathentry kind="lib" path="C:/Users/naufa/Downloads/mongodb-driver-core-3.12.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/naufa/Downloads/bson-3.12.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/naufa/Downloads/mongodb-driver-3.12.2.jar"/>
+	<classpathentry kind="output" path="out/production/Ver1"/>
+</classpath>
