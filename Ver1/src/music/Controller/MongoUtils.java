@@ -335,7 +335,7 @@ public class MongoUtils {
 
 
 
-    public boolean updateSinger(String username,String name , String password , String filepath){
+    public boolean updateSinger(String username, String filepath , boolean isTrue){
         try{
 
             byte[] imageByte = extractBytes(filepath);
@@ -343,8 +343,6 @@ public class MongoUtils {
 
             UpdateResult updateResult =
                     singerCollection.updateOne(eq("username", username), combine(
-                            set("name", name),
-                            set("password",password ),
                             set("image", imageByte)));
             return true;
         }catch (Exception e){
@@ -353,11 +351,10 @@ public class MongoUtils {
         }
     }
 
-    public boolean updateSinger(String username,String name , String password){
+    public boolean updateSinger(String username , String password){
         try{
             UpdateResult updateResult =
                     singerCollection.updateOne(eq("username", username), combine(
-                            set("name", name),
                             set("password",password )));
             return true;
         }catch (Exception e){

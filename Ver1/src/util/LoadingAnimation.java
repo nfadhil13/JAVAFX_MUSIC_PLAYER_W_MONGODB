@@ -14,12 +14,14 @@ public class LoadingAnimation {
     private volatile AtomicBoolean isQueueEmpty= new AtomicBoolean(true);
 
     public LoadingAnimation(Label loadingLabel , String message){
+
         this.loadingLabel = loadingLabel;
         this.message = message;
         loadingLabel.setText("");
     }
 
     public void startLoadingTask(){
+        System.out.println("Start animation");
         if(isLastThreadRunning.get()){
             System.out.println(isQueueEmpty.get());
             if(isQueueEmpty.get()){
@@ -74,6 +76,7 @@ public class LoadingAnimation {
                 while (aFlag.get()) {
                     try {
                         Thread.sleep(500);
+                        System.out.println("lagi loading bro");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -105,6 +108,7 @@ public class LoadingAnimation {
     }
 
     public void stopAnimation(){
+        System.out.println("Stop animation");
         aFlag.set(false);
     }
 

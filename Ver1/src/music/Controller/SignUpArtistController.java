@@ -38,6 +38,8 @@ public class SignUpArtistController implements Initializable {
     public TextField enterPasswordShow;
     public Label progressLabel;
     public Rectangle rectangleCover;
+    public Button signUp;
+    public Button clear;
 
     private String filePath;
     private MongoUtils mongoUtils;
@@ -218,17 +220,21 @@ public class SignUpArtistController implements Initializable {
         );
             try{
                 File file = fc.showOpenDialog(null);
-                if(file.length()/1048576<15){
-                    filePath = file.getAbsolutePath();
-                    File newFile = new File(filePath);
-                    System.out.println(file.getAbsolutePath());
-                    Image img = new Image(file.toURI().toString());
-                    imageUser.setImage(img);
-                    imageUser.setFitWidth(100);
-                    imageUser.setFitHeight(100);
-                    imageUser.setVisible(true);
+                if(file!=null && file.exists()){
+                    if(file.length()/1048576<15){
+                        filePath = file.getAbsolutePath();
+                        File newFile = new File(filePath);
+                        System.out.println(file.getAbsolutePath());
+                        Image img = new Image(file.toURI().toString());
+                        imageUser.setImage(img);
+                        imageUser.setFitWidth(100);
+                        imageUser.setFitHeight(100);
+                        imageUser.setVisible(true);
+                    }else{
+                        warnLabel.setText("Pic Size Max size is 15 MB");
+                    }
                 }else{
-                    warnLabel.setText("Pic Size Max size is 15 MB");
+                    warnLabel.setText("PHOTO NOT FOUND");
                 }
             }catch (Exception e){
                 e.printStackTrace();

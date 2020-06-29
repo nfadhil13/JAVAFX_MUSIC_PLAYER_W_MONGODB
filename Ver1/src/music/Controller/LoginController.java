@@ -160,8 +160,6 @@ public class LoginController implements Initializable {
     public void loginArtist(ActionEvent actionEvent) {
         firstInit();
         stopAsync();
-        if (playerController == null) playerController = new PlayerController();
-
         if (!userTextField.getText().isEmpty()) {
             if (!passwordTextField.getText().isEmpty()) {
                 try {
@@ -210,12 +208,6 @@ public class LoginController implements Initializable {
 
                     });
 
-                    loginTask.setOnScheduled(new EventHandler<WorkerStateEvent>() {
-                        @Override
-                        public void handle(WorkerStateEvent event) {
-
-                        }
-                    });
 
                     loginTask.setOnCancelled(new EventHandler<WorkerStateEvent>() {
                         @Override
@@ -224,12 +216,6 @@ public class LoginController implements Initializable {
                         }
                     });
 
-                    loginTask.setOnFailed(new EventHandler<WorkerStateEvent>() {
-                        @Override
-                        public void handle(WorkerStateEvent event) {
-                            warnLabel.setText("Error happen comeback Later");
-                        }
-                    });
 
                     ExecutorService executorService
                             = Executors.newFixedThreadPool(1);

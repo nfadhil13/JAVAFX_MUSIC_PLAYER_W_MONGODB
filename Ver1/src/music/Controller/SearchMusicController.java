@@ -2,6 +2,7 @@ package music.Controller;
 
 import Model.Album;
 import Model.Music;
+import Model.Singer;
 import Model.User;
 import com.mongodb.Mongo;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -196,7 +197,7 @@ public class SearchMusicController implements Initializable {
     public void addPlaylist(){
         System.out.println("Going to Playlist");
     }
-    public void initData(MongoUtils mongoUtils,User user ,PlayerUtils playerUtils){
+    public void initData(MongoUtils mongoUtils, User user , PlayerUtils playerUtils){
         this.mongoUtils = mongoUtils;
         this.user =user;
         this.playerUtils = playerUtils;

@@ -1,5 +1,6 @@
 package music.Controller;
 
+import Model.Singer;
 import Model.User;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -50,7 +51,7 @@ public class MainMenuController implements Initializable {
     private ReadOnlyBooleanProperty isMusicReady;
     private ChangeListener<? super Boolean> isReadyListener;
 
-    public void initData(User user , MongoUtils mongoUtils,PlayerUtils playerUtils){
+    public void initData(User user , MongoUtils mongoUtils, PlayerUtils playerUtils){
         this.user = user;
         this.mongoUtils = mongoUtils;
         this.playerUtils = playerUtils;

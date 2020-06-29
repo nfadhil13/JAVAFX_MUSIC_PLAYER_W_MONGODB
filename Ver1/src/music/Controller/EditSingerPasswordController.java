@@ -1,7 +1,6 @@
 package music.Controller;
 
 import Model.Singer;
-import Model.User;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,13 +15,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.LoadingAnimation;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class EditUserController implements Initializable {
+public class EditSingerPasswordController implements Initializable {
     public TextField enterPasswordShow;
     public PasswordField passwordTextField;
     public PasswordField rePasswordTextField;
@@ -37,8 +35,7 @@ public class EditUserController implements Initializable {
     private boolean isPasswordShowed = false;
     private Task<Boolean> task;
     private LoadingAnimation loadingAnimation;
-    private User user;
-    private PlayerUtils playerUtils;
+    private Singer singer;
     private boolean isNewPasswordShowed =false;
 
     @Override
@@ -49,10 +46,11 @@ public class EditUserController implements Initializable {
 
     public void editPassword(ActionEvent actionEvent) {
         loadingAnimation.stopAnimation();
-        if(isNewPasswordShowed)newpasswordTextField.setText(enterNewPasswordShow.getText());
-        if(isPasswordShowed)passwordTextField.setText(enterPasswordShow.getText());
-        if(user.getPassword().equals(passwordTextField.getText())){
-            if(!user.getPassword().equals(newpasswordTextField.getText())){
+        if(isNewPasswordShowed) newpasswordTextField.setText(enterNewPasswordShow.getText());
+        if(isPasswordShowed) passwordTextField.setText(enterPasswordShow.getText());
+
+        if(singer.getPassword().equals(passwordTextField.getText())){
+            if(!singer.getPassword().equals(newpasswordTextField.getText())){
                 boolean validPassword = newpasswordTextField.getText().equals(rePasswordTextField.getText());
                 if (!newpasswordTextField.getText().isEmpty()) {
                     if (validPassword) {
@@ -60,7 +58,7 @@ public class EditUserController implements Initializable {
                         task = new Task<Boolean>() {
                             @Override
                             protected Boolean call() throws Exception {
-                                return mongoUtils.updateUserPassword(user.getUsername(),password);
+                                return mongoUtils.updateSinger(singer.getUsername(),password);
                             }
                         };
                         task.setOnSucceeded(workerStateEvent -> {
@@ -68,10 +66,12 @@ public class EditUserController implements Initializable {
                             loadingAnimation.stopAnimation();
                             boolean isSuccess = task.getValue();
                             if (isSuccess) {
+                                singer.setPassword(password);
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                alert.setTitle("SING UP INFORMATION");
-                                alert.setHeaderText("SUCCESS TO SING UP");
+                                alert.setTitle("UPDATE PASSWORD INFORMATION");
+                                alert.setHeaderText("SUCCESS CHANGE YOUR PASSWORD");
                                 alert.showAndWait();
+                                clear(actionEvent);
                             } else {
                                 warnLabel.setText("Fail to update Password");
                             }
@@ -90,7 +90,7 @@ public class EditUserController implements Initializable {
                         warnLabel.setText("RE - ENTER THE SAME PASSWORD");
                     }
                 } else {
-                    warnLabel.setText("INPUT YOUR PASSWORD");
+                    warnLabel.setText("INPUT YOUR NEW PASSWORD");
                 }
             }else{
                 warnLabel.setText("NEW PASSWORD CANNOT BE SAME AS OLD PASSWORD");
@@ -120,14 +120,14 @@ public class EditUserController implements Initializable {
         loadingAnimation.stopAnimation();
         FXMLLoader loader = new FXMLLoader();
         try{
-            loader.setLocation(getClass().getResource("/View/MainMenu.fxml"));
+            loader.setLocation(getClass().getResource("/View/EditSingerMenu.fxml"));
 
             Parent parent = loader.load();
 
             Scene scene = new Scene(parent);
 
-            MainMenuController mainMenuController = loader.getController();
-            mainMenuController.initData(user,mongoUtils,playerUtils);
+            EditSingerMenuController editSingerMenuController = loader.getController();
+            editSingerMenuController.initThis(singer,mongoUtils);
 
 
             Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -143,7 +143,7 @@ public class EditUserController implements Initializable {
         if(isPasswordShowed){
             enterPasswordShow.setVisible(false);
             if(!enterPasswordShow.getText().isEmpty())
-            passwordTextField.setText(enterPasswordShow.getText());
+                passwordTextField.setText(enterPasswordShow.getText());
             passwordTextField.setVisible(true);
             isPasswordShowed=false;
         }else{
@@ -155,10 +155,9 @@ public class EditUserController implements Initializable {
         }
     }
 
-    public void initData(MongoUtils mongoUtils , User user , PlayerUtils playerUtils){
+    public void initData(MongoUtils mongoUtils , Singer singer){
         this.mongoUtils = mongoUtils;
-        this.user = user;
-        this.playerUtils = playerUtils;
+        this.singer = singer;
 
         loadingAnimation = new LoadingAnimation(progressLabel,"UPDATING YOUR ACCOUNT PASSWORD");
     }

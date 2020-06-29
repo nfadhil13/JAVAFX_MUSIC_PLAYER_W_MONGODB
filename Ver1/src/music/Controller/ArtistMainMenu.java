@@ -21,7 +21,25 @@ public class ArtistMainMenu implements Initializable {
 
     @FXML
     void EditProfile(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader();
+        try{
+            loader.setLocation(getClass().getResource("/View/EditSingerMenu.fxml"));
 
+            Parent parent = loader.load();
+
+            Scene scene = new Scene(parent);
+
+            EditSingerMenuController editSingerMenuController = loader.getController();
+            editSingerMenuController.initThis(singer,mongoUtils);
+
+
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(scene);
+            window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
