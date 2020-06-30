@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(#32175B, #DCD2EC);" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.PlaylistMenuController">
+    <children>
+        <Pane prefHeight="53.0" prefWidth="600.0" style="-fx-background-color: #080808;">
+            <children>
+                <Label layoutX="55.0" prefHeight="53.0" prefWidth="320.0" text="Playlist MENU" textFill="WHITE">
+                    <font>
+                        <Font name="Algerian" size="36.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <Pane layoutY="53.0" prefHeight="347.0" prefWidth="123.0" style="-fx-background-color: linear-gradient( #080808, #DCD2EC);">
+            <children>
+                <Button layoutX="17.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="34.0" prefWidth="89.0" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC); -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);" text="&lt;- Back" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="Arial" size="18.0" />
+                    </font>
+                </Button>
+            </children></Pane>
+        <Pane layoutX="123.0" layoutY="115.0" prefHeight="285.0" prefWidth="477.0">
+            <children>
+                <Button layoutX="84.0" layoutY="41.0" mnemonicParsing="false" onAction="#searchPlaylist" prefHeight="61.0" prefWidth="123.0" style="-fx-background-color: linear-gradient(#00605B, #080808) linear-gradient(#00605B, #080808); -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);" text="Search Playlist" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="Arial" size="18.0" />
+                    </font>
+                </Button>
+                <Rectangle arcHeight="5.0" arcWidth="5.0" height="80.0" layoutX="1.0" layoutY="209.0" stroke="BLACK" strokeType="INSIDE" width="477.0" />
+                <Button layoutX="297.0" layoutY="41.0" mnemonicParsing="false" onAction="#myPlaylist" prefHeight="61.0" prefWidth="123.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( one-pass-box , rgba(255,255,255,0.5) , 0, 0.0 , 0 , 1);;" text="My Playlist" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                    <font>
+                        <Font name="Arial" size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

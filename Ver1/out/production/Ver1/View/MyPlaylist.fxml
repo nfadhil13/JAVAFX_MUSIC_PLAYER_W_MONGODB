@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.MyPlaylistController">
+    <children>
+        <TableView fx:id="tableView" layoutX="14.0" layoutY="108.0" prefHeight="266.0" prefWidth="566.0">
+            <columns>
+                <TableColumn fx:id="nameColoumn" minWidth="-Infinity" prefWidth="564.6666669845581" text="Title" />
+            </columns>
+        </TableView>
+        <Label fx:id="singerNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="39.0" prefHeight="18.0" prefWidth="117.0" text="Playlist" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Consolas" size="12.0" />
+            </font>
+        </Label>
+        <Button layoutX="32.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" text="Back" />
+        <Button layoutX="498.0" layoutY="72.0" mnemonicParsing="false" onAction="#addPlaylist" text="Add Playlist" />
+    </children>
+</AnchorPane>

@@ -66,7 +66,7 @@ public class PlaylistMenuController implements Initializable {
             Scene scene = new Scene(parent);
 
             MyPlaylistController myPlaylistController = new MyPlaylistController();
-            myPlaylistController.initData(mongoUtils,playerUtils,user);
+            myPlaylistController.initData(user,mongoUtils,playerUtils);
 
 
             Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
