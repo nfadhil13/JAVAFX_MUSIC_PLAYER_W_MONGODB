@@ -172,11 +172,11 @@ public class AddAlbumController implements Initializable {
                         mAddAlbumTask = new Task<Boolean>() {
                             @Override
                             protected Boolean call() throws Exception {
-                                Thread.sleep(3000);
                                 return mongoUtils.createAlbum(title, singerID, filePath);
                             }
                         };
                         mAddAlbumTask.setOnSucceeded(event -> {
+                            loadingAnimation.stopAnimation();
                             boolean isSuccess = mAddAlbumTask.getValue();
                             if (isSuccess) {
                                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

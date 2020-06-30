@@ -218,6 +218,26 @@ public class MainMenuController implements Initializable {
     }
 
     public void goToQueue(ActionEvent actionEvent) {
+        unBind();
+        FXMLLoader loader = new FXMLLoader();
+        try{
+            loader.setLocation(getClass().getResource("/View/UserQueue.fxml"));
+
+            Parent parent = loader.load();
+
+            Scene scene = new Scene(parent);
+
+            UserQueueController userQueueController = loader.getController();
+            userQueueController.initData(user,mongoUtils,playerUtils);
+
+
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+            window.setScene(scene);
+            window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void unBind(){

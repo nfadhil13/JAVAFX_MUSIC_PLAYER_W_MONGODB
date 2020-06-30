@@ -37,13 +37,13 @@
                 </Label>
             <TextField fx:id="enterPasswordShow" layoutX="241.0" layoutY="251.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your password" />
                 <PasswordField fx:id="passwordTextField" layoutX="241.0" layoutY="251.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your password" />
-                <PasswordField fx:id="rePasswordTextField" layoutX="241.0" layoutY="283.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your password" />
+                <PasswordField fx:id="rePasswordTextField" layoutX="241.0" layoutY="283.0" prefHeight="25.0" prefWidth="197.0" promptText="re-enter your password" />
                 <Button fx:id="signUp" layoutX="474.0" layoutY="273.0" mnemonicParsing="false" onAction="#signUp" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Sign Up as Artist" textFill="WHITE" />
                 <Button fx:id="clear" layoutX="535.0" layoutY="238.0" mnemonicParsing="false" onAction="#clear" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Clear" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" layoutX="250.0" layoutY="52.0" stroke="WHITE" strokeType="INSIDE" width="100.0" />
-            <ImageView fx:id="imageUser" fitHeight="100.0" fitWidth="100.0" layoutX="250.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="100.0" layoutX="253.0" layoutY="32.0" stroke="WHITE" strokeType="INSIDE" width="100.0" />
+            <ImageView fx:id="imageUser" fitHeight="100.0" fitWidth="100.0" layoutX="253.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" />
             <Button layoutX="25.0" layoutY="21.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Back" />
-            <Button layoutX="357.0" layoutY="127.0" mnemonicParsing="false" onAction="#importPhoto" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Import Photo" />
+            <Button layoutX="360.0" layoutY="107.0" mnemonicParsing="false" onAction="#importPhoto" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Import Photo" />
             <Label fx:id="warnLabel" layoutX="75.0" layoutY="311.0" prefHeight="17.0" prefWidth="355.0" textFill="RED" />
             <Button fx:id="showPasswordButton" layoutX="444.0" layoutY="251.0" mnemonicParsing="false" onAction="#showPassword" prefHeight="25.0" prefWidth="25.0" />
             <Rectangle fx:id="rectangleCover" arcHeight="5.0" arcWidth="5.0" fill="#b5bdc4cb" height="400.0" layoutX="14.0" layoutY="-119.0" stroke="WHITE" strokeType="INSIDE" visible="false" width="600.0" />
@@ -58,6 +58,12 @@
                </font>
             </Label>
             <Label layoutX="57.0" layoutY="216.0" prefHeight="27.0" prefWidth="141.0" text="Username" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nameTextField" layoutX="241.0" layoutY="154.0" prefHeight="25.0" prefWidth="197.0" promptText="enter your name" />
+            <Label layoutX="57.0" layoutY="153.0" prefHeight="27.0" prefWidth="103.0" text="Name" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

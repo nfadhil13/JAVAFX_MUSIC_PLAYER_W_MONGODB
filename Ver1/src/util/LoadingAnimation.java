@@ -76,7 +76,6 @@ public class LoadingAnimation {
                 while (aFlag.get()) {
                     try {
                         Thread.sleep(500);
-                        System.out.println("lagi loading bro");
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

@@ -388,4 +388,8 @@ public class PlayerUtils implements Initializable {
             isReady.set(true);
         });
     }
+
+    public List<Music> getMusicQueue() {
+        return musicQueue;
+    }
 }
