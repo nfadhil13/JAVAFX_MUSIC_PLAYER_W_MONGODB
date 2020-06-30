@@ -302,4 +302,27 @@ public class MainMenuController implements Initializable {
 
 
     }
+
+    public void GoToPlaylistMenu(ActionEvent actionEvent) {
+        unBind();
+        FXMLLoader loader = new FXMLLoader();
+        try{
+            loader.setLocation(getClass().getResource("/View/PlaylistMenu.fxml"));
+
+            Parent parent = loader.load();
+
+            Scene scene = new Scene(parent);
+
+            PlaylistMenuController playlistMenuController = loader.getController();
+            playlistMenuController.initData(mongoUtils,playerUtils,user);
+
+
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+            window.setScene(scene);
+            window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

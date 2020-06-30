@@ -1,10 +1,9 @@
 package music.Controller;
 
 import Model.Music;
+import Model.Playlist;
 import Model.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -16,36 +15,32 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UserQueueController implements Initializable {
+public class MyPlaylistController implements Initializable {
+
+    @FXML
+    private TableView<Playlist> tableView;
 
 
     @FXML
-    private TableView<Music> tableView;
-
-
-    @FXML
-    private TableColumn<Music, String> nameColoumn;
+    private TableColumn<Playlist, String> nameColoumn;
     public Label singerNameLabel;
     private User user;
     private MongoUtils mongoUtils;
     private PlayerUtils playerUtils;
-    private ObservableList<Music> musicObservableList;
+    private ObservableList<Playlist> playlistObservableList;
 
     private ListChangeListener onQueueListChangeListener;
 
 
-    ButtonType buttonTypePlayNow = new ButtonType("Play Now");
-    ButtonType buttonDeleteFromQueue = new ButtonType("Delete From Queue");
+    ButtonType buttonTypePlayNow = new ButtonType("Play Playlist");
+    ButtonType buttonDeleteFromQueue = new ButtonType("Delete Playlist");
     ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
     private Alert alert;
 
@@ -55,12 +50,12 @@ public class UserQueueController implements Initializable {
         this.mongoUtils = mongoUtils;
         this.playerUtils = playerUtils;
 
-        musicObservableList = FXCollections.observableList(playerUtils.getMusicQueue());
-        nameColoumn.setCellValueFactory(itemData->new ReadOnlyStringWrapper(itemData.getValue().getTitle()));
-        tableView.setItems(musicObservableList);
+        playlistObservableList = FXCollections.observableList(user.getPlaylistList());
+        nameColoumn.setCellValueFactory(itemData->new ReadOnlyStringWrapper(itemData.getValue().getName()));
+        tableView.setItems(playlistObservableList);
 
 
-        alert = new Alert(AlertType.CONFIRMATION);
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
 
         alert.setTitle("Confirmation");
         alert.setHeaderText("Look, At Dialog");
@@ -70,13 +65,13 @@ public class UserQueueController implements Initializable {
         onQueueListChangeListener = c -> {
             tableView.refresh();
         };
-        musicObservableList.addListener(onQueueListChangeListener);
+        playlistObservableList.addListener(onQueueListChangeListener);
         tableView.setOnMousePressed(event -> {
             if(event.getButton().equals(MouseButton.PRIMARY)){
                 if(event.getClickCount() == 2) {
                     Optional<ButtonType> result = alert.showAndWait();
                     if(result.get() == buttonTypePlayNow){
-                        playerUtils.playNowFromQueue(tableView.getSelectionModel().getSelectedIndex());
+                        playerUtils.clearQueue();
                     }else if(result.get() == buttonDeleteFromQueue){
                         playerUtils.deleteFromQueue(tableView.getSelectionModel().getSelectedIndex());
                     }
@@ -93,7 +88,7 @@ public class UserQueueController implements Initializable {
     }
 
     public void back(ActionEvent event) {
-        musicObservableList.removeListener(onQueueListChangeListener);
+        playlistObservableList.removeListener(onQueueListChangeListener);
         FXMLLoader loader = new FXMLLoader();
         try{
             loader.setLocation(getClass().getResource("/View/MainMenu.fxml"));
@@ -115,6 +110,8 @@ public class UserQueueController implements Initializable {
         }
     }
 
-    public void clearQueue(ActionEvent actionEvent) {
+
+
+    public void addPlaylist(ActionEvent actionEvent) {
     }
 }

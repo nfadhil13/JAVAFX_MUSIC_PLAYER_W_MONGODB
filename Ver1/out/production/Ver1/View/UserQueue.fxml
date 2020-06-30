@@ -20,5 +20,6 @@
             </font>
         </Label>
         <Button layoutX="32.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button onAction="#clearQueue" layoutX="498.0" layoutY="72.0" mnemonicParsing="false" text="Clear Queue" />
     </children>
 </AnchorPane>

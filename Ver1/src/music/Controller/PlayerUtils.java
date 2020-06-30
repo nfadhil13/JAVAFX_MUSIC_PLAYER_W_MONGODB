@@ -156,7 +156,7 @@ public class PlayerUtils implements Initializable {
 
     private void executeQueueMusic(int index) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         Music currentMusic = musicQueue.get(index);
-        playNow(currentMusic,false);
+        playNow(currentMusic,true);
     }
 
     public void playPrev() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -391,5 +391,26 @@ public class PlayerUtils implements Initializable {
 
     public List<Music> getMusicQueue() {
         return musicQueue;
+    }
+
+    public void deleteFromQueue(int index){
+        musicQueue.remove(index);
+    }
+
+    public void clearQueue(){
+        musicQueue.clear();
+    }
+
+    public void playNowFromQueue(int index){
+        try {
+            current=index;
+            executeQueueMusic(index);
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }
