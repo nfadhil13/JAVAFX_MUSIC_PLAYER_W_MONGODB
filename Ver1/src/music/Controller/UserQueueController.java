@@ -3,8 +3,6 @@ package music.Controller;
 import Model.Music;
 import Model.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -20,9 +18,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 

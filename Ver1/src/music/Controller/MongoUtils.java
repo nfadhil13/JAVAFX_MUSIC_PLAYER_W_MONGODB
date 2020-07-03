@@ -1,46 +1,41 @@
 package music.Controller;
 
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Updates.combine;
-import static com.mongodb.client.model.Updates.set;
-import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
-import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import Model.*;
 import com.mongodb.*;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.gridfs.GridFSBuckets;
+import com.mongodb.client.gridfs.GridFSDownloadStream;
 import com.mongodb.client.gridfs.model.GridFSUploadOptions;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import com.mongodb.gridfs.GridFSDBFile;
-import javafx.scene.image.Image;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.gridfs.*;
-
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
-public class MongoUtils {
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
+public class MongoUtils   {
     MongoDatabase database;
     MongoCollection<Music> collection;
     MongoCollection<User> userCollection;
@@ -186,6 +181,7 @@ public class MongoUtils {
 
 
 
+
     public boolean deleteMusic(String code , String musicId){
         try{
             DeleteResult del = collection.deleteOne(eq("code", code));
@@ -244,6 +240,7 @@ public class MongoUtils {
             BasicDBObject searchQuery = new BasicDBObject();
             searchQuery.put("username", username);
             FindIterable<User> userFindIterable = userCollection.find(searchQuery);
+            System.out.println(userFindIterable.first().getUsername());
             return userFindIterable.first();
         }catch (Exception e){
             return null ;
@@ -264,6 +261,61 @@ public class MongoUtils {
         }catch (Exception e){
             return false;
         }
+    }
+
+    public boolean likeMusic(String musicCode , String username){
+        try{
+            UpdateResult updateResult = userCollection.updateOne(eq("username",username),
+                    Updates.addToSet("likedMusic",musicCode));
+            if(updateResult.getModifiedCount()>0){
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public boolean unlikeMusic(String musicCode , String username){
+        try{
+            UpdateResult updateResult = userCollection.updateOne(eq("username",username),
+                    Updates.pull("likedMusic",musicCode));
+            if(updateResult.getModifiedCount()>0){
+                return true;
+            }
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public List<String> getUserWhoseLikeMusic(String musicCode){
+        try{
+            List<String> usernameList = new ArrayList<>();
+            Object value;
+            Bson query = Filters.in("likedMusic",musicCode);
+            FindIterable<User> userFindIterable = userCollection.find(query);
+            for(User user : userFindIterable){
+                usernameList.add(user.getUsername());
+            }
+            return usernameList;
+        }catch(Exception e){
+            return null;
+        }
+    }
+
+    public List<Music> getMusicLikedByUser(List<String> musicCodeList){
+        try{
+            List<Music> musicList = new ArrayList<>();
+            FindIterable<Music> musicFindIterable = collection.find(Filters.in("code",musicCodeList));
+            for(Music music : musicFindIterable){
+                musicList.add(music);
+            }
+            return musicList;
+        }catch (Exception e){
+            return null;
+        }
+
     }
 
     public String createSinger(String email , String username , String name , String password , String filepath){
@@ -331,8 +383,6 @@ public class MongoUtils {
             FindIterable<Singer> singerFindIterable = singerCollection.find(searchQuery);
             return singerFindIterable.first().getName();
         }
-
-
 
 
     public boolean updateSinger(String username, String filepath , boolean isTrue){
@@ -501,6 +551,7 @@ public class MongoUtils {
     public boolean deletePlaylist(String username,List<Playlist> playlistList){
         return addPlaylist(username,playlistList);
     }
+
 
 
 

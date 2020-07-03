@@ -1,9 +1,7 @@
 package music.Controller;
 
 
-import Model.Singer;
 import Model.User;
-import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;

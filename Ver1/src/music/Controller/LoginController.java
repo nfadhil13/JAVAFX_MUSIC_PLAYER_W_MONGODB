@@ -2,7 +2,6 @@ package music.Controller;
 
 import Model.Singer;
 import Model.User;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
@@ -25,7 +24,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginController implements Initializable {
     public TextField userTextField;

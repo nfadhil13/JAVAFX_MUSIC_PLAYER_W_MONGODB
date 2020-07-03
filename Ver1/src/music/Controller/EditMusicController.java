@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import util.LoadingAnimation;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;

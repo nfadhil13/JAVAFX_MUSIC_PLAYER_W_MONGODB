@@ -10,7 +10,7 @@
     <children>
         <Pane prefHeight="66.0" prefWidth="600.0" style="-fx-background-color: #212121; -fx-effect: dropshadow( three-pass-box , rgba(255,255,255,0.6) , 5, 0.0 , 0 , 3 );">
             <children>
-                <Label layoutX="235.0" layoutY="6.0" prefHeight="53.0" prefWidth="131.0" text="Sign Up" textFill="#d0f0ff">
+                <Label layoutX="202.0" layoutY="7.0" prefHeight="53.0" prefWidth="210.0" text="Add Album" textFill="#d0f0ff">
                     <font>
                         <Font name="Algerian" size="36.0" />
                     </font>

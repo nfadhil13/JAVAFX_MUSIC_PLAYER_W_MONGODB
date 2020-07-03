@@ -1,16 +1,12 @@
 package music.Controller;
 
-import Model.Album;
 import Model.Music;
-import Model.Singer;
 import Model.User;
-import com.mongodb.Mongo;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -61,13 +57,15 @@ public class SearchMusicController implements Initializable {
     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 
 
-    ButtonType buttonTypePlayNow = new ButtonType("Play Now");
-    ButtonType buttonTypeQueue = new ButtonType("Add To Play Queue");
-    ButtonType buttonTypePlaylist = new ButtonType("Add To Playlist");
-    ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+    private ButtonType buttonTypePlayNow = new ButtonType("Play Now");
+    private ButtonType buttonTypeQueue = new ButtonType("Add To Play Queue");
+    private ButtonType buttonTypePlaylist = new ButtonType("Add To Playlist");
+    private ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
     private LoadingAnimation loadingAnimation;
     private Task<Music> gettingMusicNowTask;
-    private boolean isAlreadyQueued=false;
+    private boolean isAlreadyQueued = false;
+    private ButtonType likeButton = new ButtonType("like Music");
+    private ButtonType likeList = new ButtonType("see user who like");
 
     @FXML
     void back(ActionEvent event) {
@@ -81,7 +79,7 @@ public class SearchMusicController implements Initializable {
             Scene scene = new Scene(parent);
 
             SearchMenuController searchMenuController = loader.getController();
-            searchMenuController.initData(mongoUtils, user,playerUtils);
+            searchMenuController.initData(mongoUtils, user, playerUtils);
 
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -129,53 +127,85 @@ public class SearchMusicController implements Initializable {
     }
 
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         alert.setTitle("Confirmation");
         alert.setHeaderText("Look, At Dialog");
         alert.setContentText("Choose your option.");
         progressBar.setVisible(false);
-        alert.getButtonTypes().setAll(buttonTypePlaylist,buttonTypePlayNow,buttonTypeQueue,buttonTypeCancel);
-        tableView.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)){
-                    if(event.getClickCount() == 2) {
-                        Optional<ButtonType> result = alert.showAndWait();
-                        if(result.get() == buttonTypePlayNow){
-                            try {
-                                playMusicNow();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+        tableView.setOnMousePressed(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getClickCount() == 2) {
+                    boolean isLiked = false;
+                    Music music = tableView.getSelectionModel().getSelectedItem();
+                    for (String code : user.getLikedMusic()) {
+                        System.out.println(code);
+                    }
+                    if (user.getLikedMusic().contains(music.getCode())) {
+                        likeButton = new ButtonType("unlike Music");
+                        isLiked = true;
+                    }else{
+                        likeButton = new ButtonType("like Music");
+                    }
+                    alert.getButtonTypes().setAll(buttonTypePlaylist, buttonTypePlayNow, buttonTypeQueue, likeButton, likeList, buttonTypeCancel);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    ButtonType buttonType = result.get();
+                    if (buttonTypePlayNow.equals(buttonType)) {
+                        try {
+                            playMusicNow(true);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } else if (buttonTypeQueue.equals(buttonType)) {
+                        try {
+                            if (!isAlreadyQueued && !playerUtils.isSomethingPlaying()) {
+                                playMusicNow(false);
+                                System.out.println("playing");
+                            } else {
+                                queuqeMusic();
+                                System.out.println("queueing");
                             }
-                        }else if(result.get() == buttonTypeQueue){
-                            try {
-                                if(!isAlreadyQueued && !playerUtils.isSomethingPlaying()){
-                                    playMusicNow();
-                                    System.out.println("playing");
-                                }else{
-                                    queuqeMusic();
-                                    System.out.println("queueing");
-                                }
 
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }else if(result.get() == buttonTypePlaylist){
+                        } catch (IOException e) {
 
                         }
+                    } else if (buttonTypePlaylist.equals(buttonType)) {
+                    } else if (likeButton.equals(buttonType)) {
+                        likeMusic(isLiked);
+                    } else if (likeList.equals(buttonType)) {
                     }
+
                 }
 
             }
+
         });
     }
-    public void playMusicNow() throws IOException {
+
+    private void likeMusic(boolean isLiked) {
+        Music music = tableView.getSelectionModel().getSelectedItem();
+        if (isLiked) {
+            boolean isSuccess = mongoUtils.unlikeMusic(music.getCode(), user.getUsername());
+            if (isSuccess) {
+                List<String> likedMusic = user.getLikedMusic();
+                likedMusic.remove(music.getCode());
+                user.setLikedMusic(likedMusic);
+            }
+        } else {
+            boolean isSuccess = mongoUtils.likeMusic(music.getCode(), user.getUsername());
+            if (isSuccess) {
+                List<String> likedMusic = user.getLikedMusic();
+                likedMusic.add(music.getCode());
+                user.setLikedMusic(likedMusic);
+            }
+        }
+    }
+
+
+    public void playMusicNow(boolean isPlaynow) throws IOException {
         Music music = tableView.getSelectionModel().getSelectedItem();
         try {
-            playerUtils.playNow(music,true);
+            playerUtils.playNow(music, isPlaynow);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (LineUnavailableException e) {
@@ -194,18 +224,20 @@ public class SearchMusicController implements Initializable {
         }
 
     }
-    public void addPlaylist(){
+
+    public void addPlaylist() {
         System.out.println("Going to Playlist");
     }
-    public void initData(MongoUtils mongoUtils, User user , PlayerUtils playerUtils){
+
+    public void initData(MongoUtils mongoUtils, User user, PlayerUtils playerUtils) {
         this.mongoUtils = mongoUtils;
-        this.user =user;
+        this.user = user;
         this.playerUtils = playerUtils;
-        loadingAnimation = new LoadingAnimation(progressLabel,"Loading Album Detail");
+        loadingAnimation = new LoadingAnimation(progressLabel, "Loading Album Detail");
     }
 
-    private void cancelAsycnTask(){
-        if(gettingMusicNowTask!=null && gettingMusicNowTask.isRunning()){
+    private void cancelAsycnTask() {
+        if (gettingMusicNowTask != null && gettingMusicNowTask.isRunning()) {
             gettingMusicNowTask.cancel();
         }
         loadingAnimation.stopAnimation();

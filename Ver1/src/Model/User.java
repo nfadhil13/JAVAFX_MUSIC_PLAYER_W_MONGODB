@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
@@ -8,18 +9,27 @@ public class User {
     private String username;
     private String password;
     private List<Playlist> playlistList;
+    private List<String> likedMusic;
 
     public User(){
 
     }
 
-    public User(String email , String username , String password){
+    public User(String email , String username , String password ){
         this.email=email;
         this.password = password;
         this.username = username;
-        this.playlistList = null;
+        this.playlistList = new ArrayList<>();
+        this.likedMusic = new ArrayList<>();
     }
 
+    public List<String> getLikedMusic() {
+        return likedMusic;
+    }
+
+    public void setLikedMusic(List<String> likedMusic) {
+        this.likedMusic = likedMusic;
+    }
 
     public String getEmail() {
         return email;

@@ -2,16 +2,12 @@ package music.Controller;
 
 import Model.Album;
 import Model.Music;
-import Model.Singer;
 import Model.User;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,10 +15,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import util.LoadingAnimation;
 
@@ -30,7 +24,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -110,14 +103,14 @@ public class AlbumPageController implements Initializable {
                     Optional<ButtonType> result = alert.showAndWait();
                     if(result.get() == buttonTypePlayNow){
                         try {
-                            playMusicNow();
+                            playMusicNow(true);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }else if(result.get() == buttonTypeQueue){
                         try {
                             if(!isAlreadyQueued && !playerUtils.isSomethingPlaying()){
-                                playMusicNow();
+                                playMusicNow(false);
                                 System.out.println("playing");
                             }else{
                                 queuqeMusic();
@@ -136,11 +129,11 @@ public class AlbumPageController implements Initializable {
         });
     }
 
-    public void playMusicNow() throws IOException {
+    public void playMusicNow(boolean isPlayNow) throws IOException {
         isAlreadyQueued = true;
         Music music = tableView.getSelectionModel().getSelectedItem();
         try {
-            playerUtils.playNow(music , true);
+            playerUtils.playNow(music , isPlayNow);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (LineUnavailableException e) {

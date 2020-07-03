@@ -1,8 +1,6 @@
 package music.Controller;
 
 import Model.User;
-import com.mongodb.Mongo;
-import com.mongodb.client.MongoCollection;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -12,9 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
-import javafx.scene.media.MediaView;
 
 import java.net.URL;
 import java.util.ResourceBundle;

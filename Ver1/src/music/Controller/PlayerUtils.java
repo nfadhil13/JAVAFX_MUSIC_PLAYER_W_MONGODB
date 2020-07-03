@@ -1,25 +1,27 @@
 package music.Controller;
 
 import Model.Music;
-import com.mongodb.client.MongoCollection;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.Initializable;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.io.*;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-
-import javax.sound.sampled.*;
 
 public class PlayerUtils implements Initializable {
 
@@ -86,8 +88,10 @@ public class PlayerUtils implements Initializable {
             }
         });
 
-        mediaPlayer.setOnReady(() -> {
-            isReady.set(true);
+
+
+        mediaPlayer.setOnPlaying(()->{
+            isReady.set(!isReady.get());
         });
 
     }
@@ -320,7 +324,7 @@ public class PlayerUtils implements Initializable {
 
 
     public BooleanProperty isReady() {
-        return isReady;
+        return this.isReady;
     }
 
     private void canclePlayNowTask(){

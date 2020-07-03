@@ -1,11 +1,7 @@
 package music.Controller;
 
-import Model.User;
-import com.mongodb.client.MongoCollection;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -19,7 +15,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import util.LoadingAnimation;
 
-import javax.print.DocFlavor;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;

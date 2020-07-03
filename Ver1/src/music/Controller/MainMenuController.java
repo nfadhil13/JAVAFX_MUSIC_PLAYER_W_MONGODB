@@ -1,12 +1,12 @@
 package music.Controller;
 
-import Model.Singer;
+import Model.Music;
 import Model.User;
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.*;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.ReadOnlyStringProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,7 +23,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 
@@ -58,8 +57,12 @@ public class MainMenuController implements Initializable {
 
         System.out.println("name");
 
+
+
+
         firstTime = true;
         currentTitleListener = (ChangeListener<String>) (observable, oldValue, newValue) -> currentMusicLabel.setText(newValue);
+
 
         currentTimeListener = (observable, oldValue, newValue) -> {
             timeSlider.setValue(newValue.toSeconds());
@@ -67,6 +70,9 @@ public class MainMenuController implements Initializable {
         };
 
         isPlayerReady = playerUtils.isReady();
+        if(isPlayerReady !=null){
+            System.out.println("IS PLAYER TIDAK NULL");
+        }
 
 
 
@@ -86,19 +92,17 @@ public class MainMenuController implements Initializable {
 
         timeSlider.valueProperty().addListener(changeTimeListener);
 
+        isReadyListener = (ChangeListener<Boolean>) (observable, oldValue, newValue) -> {
+            System.out.println("Diterima melakukan rebind");
+            reBind();
+                isPlayerReady.removeListener(isReadyListener);
+                playbutton.setText("| |");
+
+        };
+
         if(!playerUtils.status.equals("STOPPED")){
             reBind();
         }else{
-            isReadyListener = new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                    if(newValue){
-                        reBind();
-                        isPlayerReady.removeListener(isReadyListener);
-                        playbutton.setText("| |");
-                    }
-                }
-            };
             isPlayerReady.addListener(isReadyListener);
         }
 
@@ -211,10 +215,15 @@ public class MainMenuController implements Initializable {
 
     public void nextSong(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playerUtils.nextPlay();
+        isPlayerReady.addListener(isReadyListener);
+
+
     }
 
     public void prevSong(ActionEvent actionEvent) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         playerUtils.playPrev();
+        isPlayerReady.addListener(isReadyListener);
+
     }
 
     public void goToQueue(ActionEvent actionEvent) {

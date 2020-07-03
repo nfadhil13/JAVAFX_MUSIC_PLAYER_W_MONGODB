@@ -1,6 +1,5 @@
 package music.Controller;
 
-import Model.Music;
 import Model.Playlist;
 import Model.User;
 import javafx.beans.property.ReadOnlyStringWrapper;

@@ -19,10 +19,8 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jdk.jfr.Event;
 import util.LoadingAnimation;
 
-import java.beans.BeanProperty;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
