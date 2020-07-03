@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="music.Controller.MusicLikeUserListController">
+    <children>
+        <TableView fx:id="tableView" layoutX="14.0" layoutY="108.0" prefHeight="266.0" prefWidth="566.0">
+            <columns>
+                <TableColumn fx:id="usernameColoumn" minWidth="-Infinity" prefWidth="564.6666669845581" text="Username" />
+            </columns>
+        </TableView>
+        <Label  alignment="CENTER" contentDisplay="CENTER" layoutX="238.0" layoutY="25.0" prefHeight="18.0" prefWidth="117.0" text="User List" textAlignment="CENTER" textFill="WHITE">
+            <font>
+                <Font name="Consolas" size="18.0" />
+            </font>
+        </Label>
+        <Button layoutX="32.0" layoutY="23.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Label fx:id="musicTitleLabel" alignment="CENTER" layoutX="194.0" layoutY="63.0" prefHeight="17.0" prefWidth="202.0" text="Music Title Here" textFill="WHITE" />
+      <Label fx:id="progressLabel" alignment="CENTER" layoutX="32.0" layoutY="80.0" prefHeight="17.0" prefWidth="202.0" textFill="#fc0101">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

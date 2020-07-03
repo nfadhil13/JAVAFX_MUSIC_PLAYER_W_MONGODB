@@ -30,9 +30,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class SearchMusicController implements Initializable {
+public class UserLikedMusicListController implements Initializable {
 
-    public ProgressIndicator progressBar;
     public Label progressLabel;
     @FXML
     private TextField searchField;
@@ -63,22 +62,24 @@ public class SearchMusicController implements Initializable {
     private LoadingAnimation loadingAnimation;
     private Task<Music> gettingMusicNowTask;
     private boolean isAlreadyQueued = false;
-    private ButtonType likeButton = new ButtonType("like Music");
-    private ButtonType likeList = new ButtonType("see user who like");
+    private ButtonType likeButton = new ButtonType("unlike Music");
+    private Task<List<Music>> searchTask;
+    private ObservableList<Music> albumObservableList;
+    private List<Music> musicList;
 
     @FXML
     void back(ActionEvent event) {
         loadingAnimation.stopAnimation();
         FXMLLoader loader = new FXMLLoader();
         try {
-            loader.setLocation(getClass().getResource("/View/SearchMenu.fxml"));
+            loader.setLocation(getClass().getResource("/View/MainMenu.fxml"));
 
             Parent parent = loader.load();
 
             Scene scene = new Scene(parent);
 
-            SearchMenuController searchMenuController = loader.getController();
-            searchMenuController.initData(mongoUtils, user, playerUtils);
+            MainMenuController mainMenuController = loader.getController();
+            mainMenuController.initData(user, mongoUtils, playerUtils);
 
 
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -90,61 +91,16 @@ public class SearchMusicController implements Initializable {
         }
     }
 
-    @FXML
-    void search(ActionEvent event) throws IOException {
-        Task<List<Music>> searchTask = new Task<List<Music>>() {
-            @Override
-            protected List<Music> call() throws Exception {
-                List<Music> musicList = mongoUtils.searchByMusic(searchField.getText());
-                for (int i = 0; i < musicList.size(); i++) {
-                    String nameArtist = mongoUtils.getSingerName(musicList.get(i).getSingerID());
-                    musicList.get(i).setTheSingerName(nameArtist);
-                }
-                return musicList;
-            }
-        };
-
-        searchTask.setOnSucceeded(event12 -> {
-            loadingAnimation.stopAnimation();
-            List<Music> musicList = searchTask.getValue();
-            ObservableList<Music> albumObservableList = FXCollections.observableList(musicList);
-            trackTitleColoumn.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getTitle()));
-            artistNameColoumn.setCellValueFactory(itemData -> new ReadOnlyObjectWrapper(itemData.getValue().getTheSingerName()));
-            GenreColoumn.setCellValueFactory(itemData -> new ReadOnlyObjectWrapper(itemData.getValue().getGenre()));
-            tableView.setItems(albumObservableList);
-        });
-
-
-        ExecutorService executorService
-                = Executors.newFixedThreadPool(1);
-        executorService.execute(searchTask);
-        executorService.shutdown();
-        loadingAnimation.startLoadingTask();
-
-    }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         alert.setTitle("Confirmation");
         alert.setHeaderText("Look, At Dialog");
         alert.setContentText("Choose your option.");
-        progressBar.setVisible(false);
         tableView.setOnMousePressed(event -> {
             if (event.getButton().equals(MouseButton.PRIMARY)) {
                 if (event.getClickCount() == 2) {
-                    boolean isLiked = false;
-                    Music music = tableView.getSelectionModel().getSelectedItem();
-                    for (String code : user.getLikedMusic()) {
-                        System.out.println(code);
-                    }
-                    if (user.getLikedMusic().contains(music.getCode())) {
-                        likeButton = new ButtonType("unlike Music");
-                        isLiked = true;
-                    }else{
-                        likeButton = new ButtonType("like Music");
-                    }
-                    alert.getButtonTypes().setAll(buttonTypePlaylist, buttonTypePlayNow, buttonTypeQueue, likeButton, likeList, buttonTypeCancel);
+                    alert.getButtonTypes().setAll(buttonTypePlaylist, buttonTypePlayNow, buttonTypeQueue, likeButton, buttonTypeCancel);
                     Optional<ButtonType> result = alert.showAndWait();
                     ButtonType buttonType = result.get();
                     if (buttonTypePlayNow.equals(buttonType)) {
@@ -168,9 +124,7 @@ public class SearchMusicController implements Initializable {
                         }
                     } else if (buttonTypePlaylist.equals(buttonType)) {
                     } else if (likeButton.equals(buttonType)) {
-                        likeMusic(isLiked);
-                    } else if (likeList.equals(buttonType)) {
-                        goToLikerListEvent(event);
+                        likeMusic();
                     }
 
                 }
@@ -180,22 +134,15 @@ public class SearchMusicController implements Initializable {
         });
     }
 
-    private void likeMusic(boolean isLiked) {
+    private void likeMusic() {
         Music music = tableView.getSelectionModel().getSelectedItem();
-        if (isLiked) {
-            boolean isSuccess = mongoUtils.unlikeMusic(music.getCode(), user.getUsername());
-            if (isSuccess) {
-                List<String> likedMusic = user.getLikedMusic();
-                likedMusic.remove(music.getCode());
-                user.setLikedMusic(likedMusic);
-            }
-        } else {
-            boolean isSuccess = mongoUtils.likeMusic(music.getCode(), user.getUsername());
-            if (isSuccess) {
-                List<String> likedMusic = user.getLikedMusic();
-                likedMusic.add(music.getCode());
-                user.setLikedMusic(likedMusic);
-            }
+        boolean isSuccess = mongoUtils.unlikeMusic(music.getCode(), user.getUsername());
+        if (isSuccess) {
+            List<String> likedMusic = user.getLikedMusic();
+            likedMusic.remove(music.getCode());
+            user.setLikedMusic(likedMusic);
+            musicList.remove(music);
+            tableView.refresh();
         }
     }
 
@@ -231,7 +178,37 @@ public class SearchMusicController implements Initializable {
         this.mongoUtils = mongoUtils;
         this.user = user;
         this.playerUtils = playerUtils;
-        loadingAnimation = new LoadingAnimation(progressLabel, "Loading Album Detail");
+        loadingAnimation = new LoadingAnimation(progressLabel, "Loading Your Liked Music");
+
+
+        searchTask = new Task<List<Music>>() {
+            @Override
+            protected List<Music> call() throws Exception {
+                List<Music> musicList = mongoUtils.getMusicLikedByUser(user.getLikedMusic());
+                for (int i = 0; i < musicList.size(); i++) {
+                    String nameArtist = mongoUtils.getSingerName(musicList.get(i).getSingerID());
+                    musicList.get(i).setTheSingerName(nameArtist);
+                }
+                return musicList;
+            }
+        };
+
+        searchTask.setOnSucceeded(event12 -> {
+            loadingAnimation.stopAnimation();
+            musicList = searchTask.getValue();
+            albumObservableList = FXCollections.observableList(musicList);
+            trackTitleColoumn.setCellValueFactory(itemData -> new ReadOnlyStringWrapper(itemData.getValue().getTitle()));
+            artistNameColoumn.setCellValueFactory(itemData -> new ReadOnlyObjectWrapper(itemData.getValue().getTheSingerName()));
+            GenreColoumn.setCellValueFactory(itemData -> new ReadOnlyObjectWrapper(itemData.getValue().getGenre()));
+            tableView.setItems(albumObservableList);
+        });
+
+
+        ExecutorService executorService
+                = Executors.newFixedThreadPool(1);
+        executorService.execute(searchTask);
+        executorService.shutdown();
+        loadingAnimation.startLoadingTask();
     }
 
     private void cancelAsycnTask() {
@@ -241,7 +218,7 @@ public class SearchMusicController implements Initializable {
         loadingAnimation.stopAnimation();
     }
 
-    private void goToLikerListEvent(MouseEvent actionEvent){
+    private void goToLikerListEvent(MouseEvent actionEvent) {
         FXMLLoader loader = new FXMLLoader();
         try {
             loader.setLocation(getClass().getResource("/View/MusicLikeUserList.fxml"));
@@ -251,7 +228,7 @@ public class SearchMusicController implements Initializable {
             Scene scene = new Scene(parent);
 
             MusicLikeUserListController musicLikeUserListController = loader.getController();
-            musicLikeUserListController.initData(mongoUtils,user,playerUtils,tableView.getSelectionModel().getSelectedItem());
+            musicLikeUserListController.initData(mongoUtils, user, playerUtils, tableView.getSelectionModel().getSelectedItem());
 
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
 

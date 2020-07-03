@@ -35,7 +35,8 @@
             <Button layoutX="14.0" layoutY="20.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: linear-gradient(#00605B, #DCD2EC);" text="Log Out" />
             <Button layoutX="152.0" layoutY="77.0" mnemonicParsing="false" onAction="#searchMusic" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Search Music" textFill="WHITE" />
             <Button layoutX="360.0" layoutY="77.0" mnemonicParsing="false" onAction="#EditProfile" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Edit Profile" textFill="WHITE" />
-            <Button layoutX="248.0" layoutY="159.0" mnemonicParsing="false" onAction="#GoToPlaylistMenu" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Playlist" textFill="WHITE" />
+            <Button layoutX="152.0" layoutY="160.0" mnemonicParsing="false" onAction="#GoToPlaylistMenu" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Playlist" textFill="WHITE" />
+            <Button layoutX="360.0" layoutY="160.0" mnemonicParsing="false" onAction="#GoToLikedList" prefHeight="36.0" prefWidth="104.0" style="-fx-background-color: linear-gradient(#00605B, #080808); -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );;" text="Liked Music List" textFill="WHITE" />
          </children>
       </Pane>
    </children>

@@ -334,4 +334,27 @@ public class MainMenuController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    public void GoToLikedList(ActionEvent actionEvent) {
+        unBind();
+        FXMLLoader loader = new FXMLLoader();
+        try{
+            loader.setLocation(getClass().getResource("/View/UserLikedMusicList.fxml"));
+
+            Parent parent = loader.load();
+
+            Scene scene = new Scene(parent);
+
+            UserLikedMusicListController userLikedMusicListController = loader.getController();
+            userLikedMusicListController.initData(mongoUtils,user,playerUtils);
+
+
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+            window.setScene(scene);
+            window.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
